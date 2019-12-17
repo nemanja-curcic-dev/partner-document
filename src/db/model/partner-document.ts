@@ -11,18 +11,18 @@ export class PartnerDocument {
     id!: number;
 
     @Column({
-        type: 'double'
+        type: 'bigint'
     })
-    sourceAccountId!: number
+    sourceAccountId!: number;
 
     @Column({
-        type: 'double'
+        type: 'bigint'
     })
-    targetAccountId!: number
+    targetAccountId!: number;
 
     // eslint-disable-next-line
-    @OneToMany(type => Document, document => document.partnerDocument, {onDelete: 'CASCADE', nullable: true})
-    documents!: Document[]
+    @OneToMany(type => Document, document => document.partnerDocument, {nullable: true})
+    documents!: Document[];
 
     @CreateDateColumn({
         type: 'timestamp',
@@ -43,7 +43,7 @@ export class PartnerDocument {
         nullable: true,
         default: null
     })
-    deletedAt!: Date | null
+    deletedAt!: Date | null;
 }
 
 @Entity({
@@ -62,11 +62,11 @@ export class Document {
         type: 'varchar',
         length: 255
     })
-    documentId!: string
+    documentId!: string;
     
     // eslint-disable-next-line
     @ManyToOne(type => PartnerDocument, partnerDocument => partnerDocument.documents)
-    partnerDocument!: PartnerDocument
+    partnerDocument!: PartnerDocument;
 
     @CreateDateColumn({
         type: 'timestamp',
@@ -87,5 +87,5 @@ export class Document {
         nullable: true,
         default: null
     })
-    deletedAt!: Date | null
+    deletedAt!: Date | null;
 }

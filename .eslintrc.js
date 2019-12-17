@@ -19,7 +19,8 @@ module.exports = {
     },
     'rules': {
         'indent': ['error', 4, {'SwitchCase': 1}],
-        'semi': ['error', 'always'],
+        'semi': 'off',
+        '@typescript-eslint/semi': ['error'],
         'quotes': ['error', 'single'],
         'no-process-env': ['error']
     }

@@ -16,9 +16,9 @@ export function fromPartnerDocument(partnerDoc: PartnerDocumentModel): PartnerDo
     return partnerDocs;
 }
 
-export function checkIfInArray(documents: Document[], doc: Document): boolean {
+export function checkIfInArray(documents: Document[], docId: string): boolean {
     for(const d of documents) {
-        if (d.documentId === doc.documentId) {
+        if (d.documentId === docId) {
             return false;
         }
     }

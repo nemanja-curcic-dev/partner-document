@@ -15,7 +15,7 @@ import {fromPartnerDocument} from './helpers/helpers';
 
 export class GrpcApp extends GrpcServer {
 
-    repo: PartnerDocumentRepository
+    repo: PartnerDocumentRepository;
 
     constructor(port: number, repo?: PartnerDocumentRepository) {
         super(port);
@@ -51,7 +51,7 @@ export class GrpcApp extends GrpcServer {
         } catch (e) {
             return grpcErrorHandler(callback, 'Could not get documents.')(e);
         }
-    }
+    };
 
     add = async(call: ServerUnaryCall<AddRequest>,
         callback: (error: {code: number; message: string} | null, response: AddResponse) => void): Promise<void> => {
@@ -64,7 +64,7 @@ export class GrpcApp extends GrpcServer {
             }
 
             const result = await this.repo.add(call.request.getSourceaccountid(), call.request.getTargetaccountid(), call.request.getDocumentid());
-            
+
             const response = new AddResponse();
             response.setPartnerdocuments(fromPartnerDocument(result));
 
@@ -72,7 +72,7 @@ export class GrpcApp extends GrpcServer {
         } catch(e) {
             return grpcErrorHandler(callback, 'Could not add partner document.')(e);
         }
-    }
+    };
 
     remove = async(call: ServerUnaryCall<RemoveRequest>,
         callback: (error: {code: number; message: string} | null, response: RemoveResponse) => void): Promise<void> => {
@@ -93,5 +93,5 @@ export class GrpcApp extends GrpcServer {
         } catch(e) {
             return grpcErrorHandler(callback, 'Could not remove document.')(e);
         }
-    }
+    };
 }
