@@ -19,7 +19,7 @@ export class GrpcApp extends GrpcServer {
 
     constructor(port: number, repo?: PartnerDocumentRepository) {
         super(port);
-        this.repo = repo || new PartnerDocumentRepository;
+        this.repo = repo || new PartnerDocumentRepository();
 
         // Add gRPC service
         this.server.addService(PartnerDocumentServiceService, {
