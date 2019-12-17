@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: partner-document
+    platform: node
+    framework: none
+    version: user-partner-document-version
+  name: partner-document
+  namespace: user
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: partner-document
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        prometheus.io.scrape: "true"
+        prometheus.io.port: "3000"
+        prometheus.io.path: /metrics
+      labels:
+        app: partner-document
+        platform: node
+        framework: none
+        version: user-partner-document-version
+    spec:
+      
+      containers:
+        - env:
+            - name: LOG_LEVEL
+              value: debug
+            - name: NODE_ENV
+              value: production
+            - name: HTTP_PORT
+              value: "3000"
+            - name: GRPC_PORT
+              value: "50051"
+            - name: TZ
+              value: Europe/Zurich
+            
+            
+            
+            
+            
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  key: DATABASE_URL
+                  name: partner-document
+                  optional: false
+          image: docker.coozzy.ch/user-partner-document:user-partner-document-version
+          imagePullPolicy: IfNotPresent
+          name: partner-document
+          resources:
+            requests:
+              cpu: 1m
+              memory: 80Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            capabilities:
+              drop:
+                - all
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 65534
+          stdin: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          tty: true
+        
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30

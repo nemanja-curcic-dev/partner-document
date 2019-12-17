@@ -1,0 +1,31 @@
+{
+  "generator-ts-nozzy": {
+    "version": "1.1.0",
+    "namespace": "user",
+    "service": "partner-document",
+    "authz": {
+      "enabled": false
+    },
+    "http": {
+      "enabled": false
+    },
+    "mysql": {
+      "enabled": true
+    },
+    "mongo": {
+      "enabled": false
+    },
+    "grpc": {
+      "enabled": true,
+      "server": {
+        "enabled": true
+      },
+      "client": {
+        "enabled": false
+      }
+    },
+    "amqp": {
+      "enabled": false
+    }
+  }
+}
